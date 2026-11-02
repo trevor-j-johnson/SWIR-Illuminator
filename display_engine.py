@@ -87,10 +87,10 @@ class DisplayEngine:
         self.yellow_led_on = False
 
         # Store LED duty cycle percentages
-        self.red_duty_percent = 0
-        self.green_duty_percent = 0
-        self.blue_duty_percent = 0
-        self.yellow_duty_percent = 0
+        self.red_duty_percent = 100
+        self.green_duty_percent = 100
+        self.blue_duty_percent = 100
+        self.yellow_duty_percent = 100
 
         # Assign callback functions
         self.red_pwm_callback = red_led_pwm_callback
@@ -369,9 +369,12 @@ class DisplayEngine:
 
             if self.red_pwm_callback is not None:
                 if self.red_pwm_kwargs is not None:
-                    self.red_duty_percent = self.red_pwm_callback(**self.red_pwm_kwargs)
+                    kwargs = self.red_pwm_kwargs.copy()
                 else:
-                    self.red_duty_percent = self.red_pwm_callback()
+                    kwargs = {}
+
+                kwargs["current_duty"] = self.red_duty_percent
+                self.red_duty_percent = self.red_pwm_callback(**kwargs)
 
             make_red_duty_percent_label()
         elif green_pwm_btn.is_pressed(self.touch_data):
@@ -379,9 +382,12 @@ class DisplayEngine:
 
             if self.green_pwm_callback is not None:
                 if self.green_pwm_kwargs is not None:
-                    self.green_duty_percent = self.green_pwm_callback(**self.green_pwm_kwargs)
+                    kwargs = self.green_pwm_kwargs.copy()
                 else:
-                    self.green_duty_percent = self.green_pwm_callback()
+                    kwargs = {}
+
+                kwargs["current_duty"] = self.green_duty_percent
+                self.green_duty_percent = self.green_pwm_callback(**kwargs)
 
             make_green_duty_percent_label()
         elif blue_pwm_btn.is_pressed(self.touch_data):
@@ -389,9 +395,12 @@ class DisplayEngine:
 
             if self.blue_pwm_callback is not None:
                 if self.blue_pwm_kwargs is not None:
-                    self.blue_duty_percent = self.blue_pwm_callback(**self.blue_pwm_kwargs)
+                    kwargs = self.blue_pwm_kwargs.copy()
                 else:
-                    self.blue_duty_percent = self.blue_pwm_callback()
+                    kwargs = {}
+
+                kwargs["current_duty"] = self.blue_duty_percent
+                self.blue_duty_percent = self.blue_pwm_callback(**kwargs)
 
             make_blue_duty_percent_label()
         elif yellow_pwm_btn.is_pressed(self.touch_data):
@@ -399,9 +408,12 @@ class DisplayEngine:
 
             if self.yellow_pwm_callback is not None:
                 if self.yellow_pwm_kwargs is not None:
-                    self.yellow_duty_percent = self.yellow_pwm_callback(**self.yellow_pwm_kwargs)
+                    kwargs = self.yellow_pwm_kwargs.copy()
                 else:
-                    self.yellow_duty_percent = self.yellow_pwm_callback()
+                    kwargs = {}
+
+                kwargs["current_duty"] = self.yellow_duty_percent
+                self.yellow_duty_percent = self.yellow_pwm_callback(**kwargs)
 
             make_yellow_duty_percent_label()
         
